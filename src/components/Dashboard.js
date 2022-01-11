@@ -25,9 +25,9 @@ const Dashboard = () => {
         <table>
           <thead>
             <tr>
-              <th>Flag</th>
               <th>Country Name</th>
               <th>Capital</th>
+              <th>Flag</th>
               <th>Region</th>
               <th>Subregion</th>
               <th>Population</th>
@@ -44,25 +44,25 @@ const Dashboard = () => {
               <Fragment>
                 {apiData.map((data) => (
                   <tr>
+                    <td>{data.name.common}</td>
+                    <td>{data.capital ? data.capital : '--'}</td>
                     <td>
                       {' '}
                       <img className='flag' src={data.flags.png} />
                     </td>
-                    <td>{data.name.common}</td>
-                    <td>{data.capital}</td>
-                    <td>{data.region}</td>
-                    <td>{data.subregion}</td>
+                    <td>{data.region ? data.region : '--'}</td>
+                    <td>{data.subregion ? data.subregion : '--'}</td>
                     <td>
                       {new Intl.NumberFormat('en-IN').format(data.population)}
                     </td>
                     <td>
-                      {data.borders?.map((border) => (
-                        <small>{border}</small>
-                      ))}
+                      {data.borders
+                        ? data.borders?.map((border) => <p>{border}</p>)
+                        : '--'}
                     </td>
                     <td>
                       {Object.values(data.languages).map((lang) => (
-                        <small>{lang}</small>
+                        <p>{lang}</p>
                       ))}
                     </td>
                   </tr>
