@@ -5,7 +5,7 @@ const Header = () => {
     <div className='header'>
       <div className='header__logo'>Asian Countries</div>
       <button className='showBtn' onClick={() => window.location.reload()}>
-        Show
+        Refresh
       </button>
     </div>
   )

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react/cjs/react.development'
 import axios from 'axios'
+import Loader from './Loader'
 
 const Dashboard = () => {
   const [apiData, setApiData] = useState([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    console.log('before')
     getApiData()
   }, [])
 
@@ -15,7 +15,6 @@ const Dashboard = () => {
     setLoading(true)
     const res = await axios.get('https://restcountries.com/v3.1/region/asia')
     setApiData(res.data)
-    console.log(res.data)
     setLoading(false)
   }
 
@@ -38,12 +37,14 @@ const Dashboard = () => {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={8}>loading...</td>
+                <td colSpan={8}>
+                  <Loader />
+                </td>
               </tr>
             ) : (
               <Fragment>
                 {apiData.map((data) => (
-                  <tr>
+                  <tr key={data.name.common}>
                     <td>{data.name.common}</td>
                     <td>{data.capital ? data.capital : '--'}</td>
                     <td>
@@ -57,12 +58,12 @@ const Dashboard = () => {
                     </td>
                     <td>
                       {data.borders
-                        ? data.borders?.map((border) => <p>{border}</p>)
+                        ? data.borders?.map((border) => <p key={border}>{border}</p>)
                         : '--'}
                     </td>
                     <td>
                       {Object.values(data.languages).map((lang) => (
-                        <p>{lang}</p>
+                        <p key={lang}>{lang}</p>
                       ))}
                     </td>
                   </tr>
